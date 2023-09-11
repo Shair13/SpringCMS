@@ -13,7 +13,6 @@ import org.springframework.web.servlet.view.InternalResourceViewResolver;
 
 import javax.persistence.EntityManagerFactory;
 
-public class AppConfig {
     @Configuration
     @EnableWebMvc
     @ComponentScan(basePackages = "pl.coderslab")
@@ -49,4 +48,3 @@ public class AppConfig {
 //        configurer.enable();
 //    }
     }
-}
