@@ -1,8 +1,6 @@
 package pl.coderslab.model;
 
 
-import org.hibernate.mapping.ToOne;
-
 import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -92,7 +90,7 @@ public class Article {
                 "id=" + id +
                 ", title='" + title + '\'' +
                 ", author=" + author +
-                ", categories=" + categories +
+//                ", categories=" + categories +
                 ", content='" + content + '\'' +
                 ", created='" + created + '\'' +
                 ", updated='" + updated + '\'' +
