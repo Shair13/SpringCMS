@@ -21,12 +21,23 @@ public class Article {
     @OneToMany
     private List<Category> categories; // (powiązanie relacją do klasy Category) - artykuł może należeć do wielu kategorii
     private String content;
-    private String created = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")); // (wartość ma być automatycznie dodawana podczas zapisu)
-    private String updated = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")); // (wartość ma być automatycznie zmieniana podczas edycji).
+    private String created; // (wartość ma być automatycznie dodawana podczas zapisu)
+    private String updated; // (wartość ma być automatycznie zmieniana podczas edycji).
 
-    public Article(){
-        
+    public Article() {
+
     }
+
+    @PrePersist
+    public void prePersist() {
+        created = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
+    }
+
+    @PreUpdate
+    public void preUpdate() {
+        updated = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
+    }
+
     public Long getId() {
         return id;
     }
