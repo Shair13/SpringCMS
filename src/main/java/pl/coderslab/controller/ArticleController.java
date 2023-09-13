@@ -25,6 +25,33 @@ public class ArticleController {
         this.categoryDao = categoryDao;
     }
 
+
+    @GetMapping("/add")
+    public String displayAddForm(Model model) {
+        model.addAttribute("article", new Article());
+        return "/article/add-article";
+    }
+
+    @PostMapping("/add")
+    public String processAddForm(Article article) {
+        articleDao.saveArticle(article);
+        return "redirect:/article/showAll";
+    }
+
+
+    @GetMapping("/update")
+    public String displayUpdateForm(@RequestParam Long id, Model model) {
+        model.addAttribute(articleDao.findArticleById(id));
+        return "/article/update-article";
+
+    }
+
+    @PostMapping("/update")
+    public String processUpdateForm(Article article) {
+        articleDao.updateArticle(article);
+        return "redirect:/article/showAll";
+    }
+
     @GetMapping("/showAll")
     public String showAllArticles(Model model) {
         model.addAttribute("articles", articleDao.findAllArticles());
@@ -41,6 +68,17 @@ public class ArticleController {
     @RequestMapping("/confirmDelete")
     public String confirmDelete() {
         return "article/confirm-delete";
+    }
+
+
+    @ModelAttribute("authors")
+    public List<Author> authors() {
+        return authorDao.findAllAuthors();
+    }
+
+    @ModelAttribute("categories")
+    public List<Category> categories(){
+        return categoryDao.findAllCategories();
     }
 
 }

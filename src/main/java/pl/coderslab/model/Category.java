@@ -1,6 +1,7 @@
 package pl.coderslab.model;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Table(name = "categories")
@@ -11,6 +12,8 @@ public class Category {
     private Long id;
     private String name;
     private String description;
+    @ManyToMany(fetch = FetchType.EAGER)
+    private List<Article> articles;
 
     public Category() {
 

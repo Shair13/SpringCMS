@@ -17,10 +17,10 @@ public class Article {
     @ManyToOne(fetch = FetchType.EAGER)
     private Author author; // (powiązanie relacją do klasy Author) - artykuł może mieć tylko jednego autora
 
-    @OneToMany(fetch = FetchType.EAGER)
+    @ManyToMany(fetch = FetchType.EAGER)
     private List<Category> categories; // (powiązanie relacją do klasy Category) - artykuł może należeć do wielu kategorii
     private String content;
-    private String created = "none"; // (wartość ma być automatycznie dodawana podczas zapisu)
+    private String created; // (wartość ma być automatycznie dodawana podczas zapisu)
     private String updated = "none"; // (wartość ma być automatycznie zmieniana podczas edycji).
 
     public Article() {

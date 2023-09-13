@@ -6,13 +6,13 @@
     <title>Title</title>
 </head>
 <body>
-Update author id: ${author.id}: <br>
+<h1>Update author id: ${author.id}: </h1><br>
 <br>
 <form:form method="post" modelAttribute="author">
     First name: <form:input path="firstName"/>
     Last name:  <form:input path="lastName"/>
     <input type="submit" value="update author">
-    <button onClick="javascript:location.href='showAll'">Cancel</button>
 </form:form>
+<button onClick="javascript:location.href='showAll'">Cancel</button>
 </body>
 </html>

@@ -10,7 +10,7 @@
 <form:form modelAttribute="article" method="post">
     Title: <form:input path="title" type="text"/> <br>
     Author:
-    <form:select path="author">
+    <form:select path="author.id">
         <form:option value="none" label="--Select author--"/>
         <form:options itemLabel="fullName" itemValue="id" items="${authors}"/>
     </form:select> <br>
