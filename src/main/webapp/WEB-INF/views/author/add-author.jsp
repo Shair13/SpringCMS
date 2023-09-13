@@ -6,10 +6,10 @@
     <title>Title</title>
 </head>
 <body>
-<form:form method="post" modelAttribute="category">
-    Name:           <form:input path="name"/>
-    Description:    <form:input path="description"/>
-    <input type="submit" value="add category">
+<form:form method="post" modelAttribute="author">
+    First name:           <form:input path="firstName"/>
+    Last name:    <form:input path="lastName"/>
+    <input type="submit" value="add author">
 </form:form>
 <button onClick="javascript:location.href='showAll'">Cancel</button>
 </body>

@@ -6,12 +6,12 @@
     <title>Title</title>
 </head>
 <body>
-Update category id: ${category.id}: <br>
+Update author id: ${author.id}: <br>
 <br>
-<form:form method="post" modelAttribute="category">
-    Name: <form:input path="name" value="${category.name}"/>
-    Description: <form:input path="description" value="${category.description}"/>
-    <input type="submit" value="update category">
+<form:form method="post" modelAttribute="author">
+    First name: <form:input path="firstName"/>
+    Last name:  <form:input path="lastName"/>
+    <input type="submit" value="update author">
     <button onClick="javascript:location.href='showAll'">Cancel</button>
 </form:form>
 </body>

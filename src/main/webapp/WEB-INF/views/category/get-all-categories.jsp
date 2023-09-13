@@ -38,5 +38,8 @@
 <a href="/category/add">
     <button>Add new category</button>
 </a>
+<a href="/">
+    <button>Back</button>
+</a>
 </body>
 </html>
