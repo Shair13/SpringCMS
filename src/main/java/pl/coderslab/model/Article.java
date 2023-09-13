@@ -14,13 +14,14 @@ public class Article {
     private Long id;
     @Column(length = 200)
     private String title; // (max. 200 znaków)
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     private Author author; // (powiązanie relacją do klasy Author) - artykuł może mieć tylko jednego autora
-    @OneToMany
+
+    @OneToMany(fetch = FetchType.EAGER)
     private List<Category> categories; // (powiązanie relacją do klasy Category) - artykuł może należeć do wielu kategorii
     private String content;
-    private String created; // (wartość ma być automatycznie dodawana podczas zapisu)
-    private String updated; // (wartość ma być automatycznie zmieniana podczas edycji).
+    private String created = "none"; // (wartość ma być automatycznie dodawana podczas zapisu)
+    private String updated = "none"; // (wartość ma być automatycznie zmieniana podczas edycji).
 
     public Article() {
 

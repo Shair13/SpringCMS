@@ -58,9 +58,4 @@ public class AuthorController {
         authorDao.updateAuthor(author);
         return "redirect:/author/showAll";
     }
-
-
-
-
-
 }

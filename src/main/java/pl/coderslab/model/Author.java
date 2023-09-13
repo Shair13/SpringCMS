@@ -16,6 +16,10 @@ public class Author {
 
     }
 
+    public String getFullName(){
+        return firstName + " " + lastName;
+    }
+
     public Long getId() {
         return id;
     }

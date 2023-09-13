@@ -1,3 +1,4 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%--
   Created by IntelliJ IDEA.
   User: szer13
@@ -12,7 +13,7 @@
     <title>Book delete</title>
 </head>
 <body>
-<h5>Do you really want to delete category with ID ${param.id}?</h5>
+<h5>Do you really want to delete category with ID <c:out value="${param.id}" />?</h5>
 <button onClick="javascript:location.href='delete?id=${param.id}'">OK</button>
 <button onClick="javascript:location.href='showAll'">Cancel</button>
 </body>
