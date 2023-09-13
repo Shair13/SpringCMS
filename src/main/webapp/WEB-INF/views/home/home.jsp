@@ -17,5 +17,6 @@
 </c:forEach>
 <button onClick="javascript:location.href='category/showAll'">Categories</button>
 <button onClick="javascript:location.href='author/showAll'">Authors</button>
+<button onClick="javascript:location.href='article/showAll'">Article</button>
 </body>
 </html>
