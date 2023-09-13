@@ -24,7 +24,7 @@ public class AuthorController {
         author.setLastName(lastName);
         authorDao.saveAuthor(author);
         model.addAttribute("author", author);
-        return "author-add";
+        return "author/author-add";
     }
 
 
