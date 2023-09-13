@@ -15,5 +15,6 @@
 <c:forEach items="${lastFiveArticles}" var="article">
     <p>Tytuł: ${article.title}, Data dodania: ${article.created}, Content: ${article.content}</p>
 </c:forEach>
+<button onClick="javascript:location.href='category/showAll'">Categories</button>
 </body>
 </html>
