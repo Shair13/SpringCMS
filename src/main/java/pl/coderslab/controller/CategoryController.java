@@ -3,10 +3,12 @@ package pl.coderslab.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import pl.coderslab.dao.CategoryDao;
 import pl.coderslab.model.Category;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @Controller
@@ -29,6 +31,15 @@ public class CategoryController {
         return "category/add-category";
     }
 
+    @PostMapping("/add")
+    public String processAddForm(@Valid Category category, BindingResult bindingResult) {
+        if (bindingResult.hasErrors()) {
+            return "category/add-category";
+        }
+        categoryDao.updateCategory(category);
+        return "redirect:/category/showAll";
+    }
+
     @GetMapping("/update")
     public String displayUpdateForm(@RequestParam Long id, Model model) {
         model.addAttribute("category", categoryDao.findCategoryById(id));
@@ -36,20 +47,14 @@ public class CategoryController {
     }
 
     @PostMapping("/update")
-    public String processUpdateForm(Category category) {
+    public String processUpdateForm(@Valid Category category, BindingResult bindingResult) {
+        if(bindingResult.hasErrors()){
+            return "category/update-category";
+        }
         categoryDao.updateCategory(category);
         return "redirect:/category/showAll";
     }
 
-    @PostMapping("/add")
-    public String processAddForm(Category category) {
-//        if (category.getId() == null) {
-//            categoryDao.saveCategory(category);
-//        } else {
-        categoryDao.updateCategory(category);
-//        }
-        return "redirect:/category/showAll";
-    }
 
     @RequestMapping("/delete")
     public String deleteCategory(@RequestParam Long id) {

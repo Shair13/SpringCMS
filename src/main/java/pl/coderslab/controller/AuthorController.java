@@ -2,12 +2,15 @@ package pl.coderslab.controller;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import pl.coderslab.dao.AuthorDao;
 import pl.coderslab.model.Author;
+
+import javax.validation.Valid;
 
 @Controller
 @RequestMapping("/author")
@@ -31,30 +34,37 @@ public class AuthorController {
     }
 
     @PostMapping("/add")
-    public String processAddForm(Author author){
+    public String processAddForm(@Valid Author author, BindingResult bindingResult) {
+        if (bindingResult.hasErrors()) {
+            return "/author/add-author";
+        }
         authorDao.saveAuthor(author);
         return "redirect:/author/showAll";
     }
 
     @RequestMapping("/delete")
-    public String deleteAuthor(@RequestParam Long id){
+    public String deleteAuthor(@RequestParam Long id) {
         authorDao.deleteAuthor(authorDao.findAuthorById(id));
         return "redirect:/author/showAll";
     }
+
     @RequestMapping("/confirmDelete")
     public String confirmDelete() {
         return "author/confirm-delete";
     }
 
     @GetMapping("/update")
-    public String displayUpdateForm(@RequestParam Long id, Model model){
+    public String displayUpdateForm(@RequestParam Long id, Model model) {
         model.addAttribute(authorDao.findAuthorById(id));
         return "/author/update-author";
 
     }
 
     @PostMapping("/update")
-    public String processUpdateForm(Author author){
+    public String processUpdateForm(@Valid Author author, BindingResult bindingResult) {
+        if (bindingResult.hasErrors()) {
+            return "author/update-author";
+        }
         authorDao.updateAuthor(author);
         return "redirect:/author/showAll";
     }

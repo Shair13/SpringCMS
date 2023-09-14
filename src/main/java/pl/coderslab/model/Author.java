@@ -1,6 +1,7 @@
 package pl.coderslab.model;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
 
 @Entity
 @Table(name = "authors")
@@ -9,7 +10,9 @@ public class Author {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    @NotBlank(message = "Pole nie może być puste!")
     private String firstName;
+    @NotBlank(message = "Pole nie może być puste!")
     private String lastName;
 
     public Author() {
