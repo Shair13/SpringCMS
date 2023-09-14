@@ -1,6 +1,8 @@
 package pl.coderslab.model;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Size;
 import java.util.List;
 
 @Entity
@@ -10,10 +12,10 @@ public class Category {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    @Size(min = 5, message = "Nazwa musi mieć przynajmniej 5 znaków")
+    @NotBlank(message = "Pole nie może być puste")
     private String name;
     private String description;
-    @ManyToMany(fetch = FetchType.EAGER)
-    private List<Article> articles;
 
     public Category() {
 

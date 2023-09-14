@@ -2,6 +2,7 @@ package pl.coderslab.controller;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import pl.coderslab.dao.ArticleDao;
 import pl.coderslab.dao.AuthorDao;
@@ -9,6 +10,8 @@ import pl.coderslab.dao.CategoryDao;
 import pl.coderslab.model.Article;
 import pl.coderslab.model.Author;
 import pl.coderslab.model.Category;
+
+import javax.validation.Valid;
 import java.util.List;
 
 @Controller
@@ -33,7 +36,10 @@ public class ArticleController {
     }
 
     @PostMapping("/add")
-    public String processAddForm(Article article) {
+    public String processAddForm(@Valid Article article, BindingResult bindingResult) {
+        if (bindingResult.hasErrors()) {
+            return "/article/add-article";
+        }
         articleDao.saveArticle(article);
         return "redirect:/article/showAll";
     }
@@ -47,7 +53,10 @@ public class ArticleController {
     }
 
     @PostMapping("/update")
-    public String processUpdateForm(Article article) {
+    public String processUpdateForm(@Valid Article article, BindingResult bindingResult) {
+        if (bindingResult.hasErrors()) {
+            return "/article/update-article";
+        }
         articleDao.updateArticle(article);
         return "redirect:/article/showAll";
     }
@@ -59,12 +68,12 @@ public class ArticleController {
     }
 
 
-
     @RequestMapping("/delete")
     public String deleteArticle(@RequestParam Long id) {
         articleDao.deleteArticle(articleDao.findArticleById(id));
         return "redirect:/article/showAll";
     }
+
     @RequestMapping("/confirmDelete")
     public String confirmDelete() {
         return "article/confirm-delete";
@@ -77,7 +86,7 @@ public class ArticleController {
     }
 
     @ModelAttribute("categories")
-    public List<Category> categories(){
+    public List<Category> categories() {
         return categoryDao.findAllCategories();
     }
 
