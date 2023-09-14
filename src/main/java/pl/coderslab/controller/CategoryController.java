@@ -36,7 +36,7 @@ public class CategoryController {
         if (bindingResult.hasErrors()) {
             return "category/add-category";
         }
-        categoryDao.updateCategory(category);
+        categoryDao.saveCategory(category);
         return "redirect:/category/showAll";
     }
 
