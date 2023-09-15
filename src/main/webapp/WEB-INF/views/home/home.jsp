@@ -10,13 +10,31 @@
 <html>
 <head>
     <title>Title</title>
+    <style>
+        .separatorLine{
+            color: orangered;
+            font-weight: bold;
+        }
+    </style>
 </head>
 <body>
-<c:forEach items="${lastFiveArticles}" var="article">
-    <p>Tytuł: ${article.title}, Data dodania: ${article.created}, Content: ${article.content}</p>
-</c:forEach>
 <button onClick="javascript:location.href='category/showAll'">Categories</button>
 <button onClick="javascript:location.href='author/showAll'">Authors</button>
 <button onClick="javascript:location.href='article/showAll'">Article</button>
+<h2>Select article by category:</h2>
+<c:forEach items="${categories}" var="category">
+    <a href="/articleByCategory?id=${category.id}">${category.name}</a>,
+</c:forEach> <br>
+
+<h1>Last 5 articles:</h1>
+<c:forEach items="${lastFiveArticles}" var="article" varStatus="i">
+    <p>
+        <h3>Article ${i.count}:</h3>
+        <b>Tytuł:</b> <c:out value="${article.title}"/> <br>
+        <b>Data dodania:</b> <c:out value="${article.created}"/> <br><br>
+        <b>Content:</b> <c:out value="${article.content}"/>
+        <p class="separatorLine">______________________________________________________________________________</p>
+    </p>
+</c:forEach>
 </body>
 </html>

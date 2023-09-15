@@ -31,6 +31,7 @@ public class CategoryDao {
         return entityManager.find(Category.class, id);
     }
 
+
     public List<Category> findAllCategories(){
         return entityManager.createQuery("SELECT c FROM Category c", Category.class).getResultList();
     }
