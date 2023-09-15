@@ -5,22 +5,25 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
-import pl.coderslab.dao.CategoryDao;
 import pl.coderslab.model.Category;
+import pl.coderslab.repository.CategoryRepository;
 
 import javax.validation.Valid;
 import java.util.List;
+import java.util.Optional;
 
 @Controller
 @RequestMapping("category")
 public class CategoryController {
 
+//  private CategoryDao categoryDao;
+
     @Autowired
-    private CategoryDao categoryDao;
+    private CategoryRepository categoryRepository;
 
     @RequestMapping("/showAll")
     public String getAllCategories(Model model) {
-        List<Category> categories = categoryDao.findAllCategories();
+        List<Category> categories = categoryRepository.findAll();
         model.addAttribute("categories", categories);
         return "category/get-all-categories";
     }
@@ -36,31 +39,34 @@ public class CategoryController {
         if (bindingResult.hasErrors()) {
             return "category/add-category";
         }
-        categoryDao.saveCategory(category);
+        categoryRepository.save(category);
         return "redirect:/category/showAll";
     }
 
     @GetMapping("/update")
     public String displayUpdateForm(@RequestParam Long id, Model model) {
-        model.addAttribute("category", categoryDao.findCategoryById(id));
+        model.addAttribute("category", categoryRepository.findById(id).get());
         return "/category/update-category";
     }
 
     @PostMapping("/update")
     public String processUpdateForm(@Valid Category category, BindingResult bindingResult) {
-        if(bindingResult.hasErrors()){
+        if (bindingResult.hasErrors()) {
             return "category/update-category";
         }
-        categoryDao.updateCategory(category);
+        categoryRepository.save(category);
         return "redirect:/category/showAll";
     }
 
 
     @RequestMapping("/delete")
     public String deleteCategory(@RequestParam Long id) {
-        Category category = categoryDao.findCategoryById(id);
-        categoryDao.deleteCategory(category);
-        return "redirect:/category/showAll";
+        Optional<Category> categoryOptional = categoryRepository.findById(id);
+        if (categoryOptional.isPresent()) {
+            categoryRepository.delete(categoryOptional.get());
+            return "redirect:/category/showAll";
+        }
+        return "/home/no-article";
     }
 
     @RequestMapping("/confirmDelete")

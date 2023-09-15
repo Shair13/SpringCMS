@@ -2,16 +2,16 @@ package pl.coderslab.converter;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.convert.converter.Converter;
-import pl.coderslab.dao.AuthorDao;
 import pl.coderslab.model.Author;
+import pl.coderslab.repository.AuthorRepository;
 
 public class AuthorConverter implements Converter<String, Author> {
 
     @Autowired
-    private AuthorDao authorDao;
+    private AuthorRepository authorRepository;
 
     @Override
     public Author convert(String source) {
-        return authorDao.findAuthorById(Long.parseLong(source));
+        return authorRepository.findById(Long.parseLong(source)).get();
     }
 }

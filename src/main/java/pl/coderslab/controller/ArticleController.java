@@ -4,12 +4,12 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
-import pl.coderslab.dao.ArticleDao;
-import pl.coderslab.dao.AuthorDao;
-import pl.coderslab.dao.CategoryDao;
 import pl.coderslab.model.Article;
 import pl.coderslab.model.Author;
 import pl.coderslab.model.Category;
+import pl.coderslab.repository.ArticleRepository;
+import pl.coderslab.repository.AuthorRepository;
+import pl.coderslab.repository.CategoryRepository;
 
 import javax.validation.Valid;
 import java.util.List;
@@ -18,14 +18,16 @@ import java.util.List;
 @RequestMapping("/article")
 public class ArticleController {
 
-    private final ArticleDao articleDao;
-    private final AuthorDao authorDao;
-    private final CategoryDao categoryDao;
+    private final ArticleRepository articleRepository;
+    private final AuthorRepository authorRepository;
+    private final CategoryRepository categoryRepository;
 
-    public ArticleController(ArticleDao articleDao, AuthorDao authorDao, CategoryDao categoryDao) {
-        this.articleDao = articleDao;
-        this.authorDao = authorDao;
-        this.categoryDao = categoryDao;
+    public ArticleController(ArticleRepository articleRepository,
+                             AuthorRepository authorRepository,
+                             CategoryRepository categoryRepository) {
+        this.articleRepository = articleRepository;
+        this.authorRepository = authorRepository;
+        this.categoryRepository = categoryRepository;
     }
 
 
@@ -40,14 +42,14 @@ public class ArticleController {
         if (bindingResult.hasErrors()) {
             return "/article/add-article";
         }
-        articleDao.saveArticle(article);
+        articleRepository.save(article);
         return "redirect:/article/showAll";
     }
 
 
     @GetMapping("/update")
     public String displayUpdateForm(@RequestParam Long id, Model model) {
-        model.addAttribute(articleDao.findArticleById(id));
+        model.addAttribute("article", articleRepository.findById(id).get());
         return "/article/update-article";
 
     }
@@ -57,20 +59,20 @@ public class ArticleController {
         if (bindingResult.hasErrors()) {
             return "/article/update-article";
         }
-        articleDao.updateArticle(article);
+        articleRepository.save(article);
         return "redirect:/article/showAll";
     }
 
     @GetMapping("/showAll")
     public String showAllArticles(Model model) {
-        model.addAttribute("articles", articleDao.findAllArticles());
+        model.addAttribute("articles", articleRepository.findAll());
         return "/article/show-all-articles";
     }
 
 
     @RequestMapping("/delete")
     public String deleteArticle(@RequestParam Long id) {
-        articleDao.deleteArticle(articleDao.findArticleById(id));
+        articleRepository.delete(articleRepository.findById(id).get());
         return "redirect:/article/showAll";
     }
 
@@ -82,12 +84,12 @@ public class ArticleController {
 
     @ModelAttribute("authors")
     public List<Author> authors() {
-        return authorDao.findAllAuthors();
+        return authorRepository.findAll();
     }
 
     @ModelAttribute("categories")
     public List<Category> categories() {
-        return categoryDao.findAllCategories();
+        return categoryRepository.findAll();
     }
 
 }
