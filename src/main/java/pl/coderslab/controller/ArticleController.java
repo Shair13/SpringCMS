@@ -13,6 +13,7 @@ import pl.coderslab.repository.CategoryRepository;
 
 import javax.validation.Valid;
 import java.util.List;
+import java.util.Optional;
 
 @Controller
 @RequestMapping("/article")
@@ -72,7 +73,8 @@ public class ArticleController {
 
     @RequestMapping("/delete")
     public String deleteArticle(@RequestParam Long id) {
-        articleRepository.delete(articleRepository.findById(id).get());
+        Optional<Article> optionalArticle = articleRepository.findById(id);
+        optionalArticle.ifPresent(articleRepository::delete);
         return "redirect:/article/showAll";
     }
 
